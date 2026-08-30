@@ -151,7 +151,8 @@ export function BuilderProvider({ children }: { children: ReactNode }) {
           const idx = parent.children.findIndex((c) => c.id === id);
           const children = [...parent.children];
           const [node] = children.splice(idx, 1);
-          let target =
+          if (!node) return r;
+          const target =
             delta === "front"
               ? children.length
               : delta === "back"
@@ -164,8 +165,10 @@ export function BuilderProvider({ children }: { children: ReactNode }) {
         withRoot((r) => updateNode(r, id, (n) => ({ ...n, [flag]: !n[flag] }))),
       group: (ids) =>
         withRoot((r) => {
-          if (ids.length === 0) return r;
-          const parent = findParent(r, ids[0]);
+          const first = ids[0];
+          if (!first) return r;
+          const parent = findParent(r, first);
+
           if (!parent) return r;
           const nodes = ids.map((i) => findNode(r, i)).filter(Boolean) as RbxNode[];
           let next = r;
