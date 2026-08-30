@@ -14,9 +14,10 @@ const u = (v: unknown): UDim2 =>
 const v2 = (v: unknown): Vector2 => (v as Vector2) ?? { x: 0, y: 0 };
 
 export function computeRect(node: RbxNode, parent: Rect): Rect {
-  const size = u(node.props.Size);
-  const pos = u(node.props.Position);
-  const anchor = v2(node.props.AnchorPoint);
+  const np = node.props as Record<string, unknown>;
+  const size = u(np["Size"]);
+  const pos = u(np["Position"]);
+  const anchor = v2(np["AnchorPoint"]);
   const w = size.xs * parent.w + size.xo;
   const h = size.ys * parent.h + size.yo;
   const x = parent.x + pos.xs * parent.w + pos.xo - anchor.x * w;
@@ -29,12 +30,13 @@ export function childModifier(node: RbxNode, className: string): RbxNode | undef
 }
 
 export function nodeStyle(node: RbxNode, rect: Rect): CSSProperties {
-  const p = node.props as Record<string, any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const p = node.props as any;
   const corner = childModifier(node, "UICorner");
   const stroke = childModifier(node, "UIStroke");
   const gradient = childModifier(node, "UIGradient");
   const scale = childModifier(node, "UIScale");
-  const radius = corner ? u(corner.props.CornerRadius) : null;
+  const radius = corner ? u((corner.props as any)["CornerRadius"]) : null;
 
   const bgAlpha = 1 - (p.BackgroundTransparency ?? 0);
   const style: CSSProperties = {
@@ -69,14 +71,15 @@ export function nodeStyle(node: RbxNode, rect: Rect): CSSProperties {
 }
 
 export function textStyle(node: RbxNode, rect: Rect): CSSProperties {
-  const p = node.props as Record<string, any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const p = node.props as any;
   const padding = childModifier(node, "UIPadding");
   const pad = padding
     ? {
-        paddingTop: u(padding.props.PaddingTop).xo,
-        paddingBottom: u(padding.props.PaddingBottom).xo,
-        paddingLeft: u(padding.props.PaddingLeft).xo,
-        paddingRight: u(padding.props.PaddingRight).xo,
+        paddingTop: u((padding.props as any)["PaddingTop"]).xo,
+        paddingBottom: u((padding.props as any)["PaddingBottom"]).xo,
+        paddingLeft: u((padding.props as any)["PaddingLeft"]).xo,
+        paddingRight: u((padding.props as any)["PaddingRight"]).xo,
       }
     : {};
   const size = p.TextScaled ? Math.max(8, rect.h * 0.55) : (p.TextSize ?? 14);
