@@ -184,7 +184,7 @@ export function Explorer({ onAsk }: { onAsk: (prompt: string) => void }) {
             >
               Paste Into
             </ContextMenuItem>
-            <ContextMenuItem variant="destructive" onSelect={() => b.remove(node.id)}>
+            <ContextMenuItem className="text-destructive" onSelect={() => b.remove(node.id)}>
               Delete
             </ContextMenuItem>
             <ContextMenuSeparator />
