@@ -7,7 +7,7 @@ import { findNode, pathOf } from "@/lib/rbx/tree";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 
-function NumberField({ value, onChange, step }: { value: number; onChange: (n: number) => void; step?: number }) {
+function NumberField({ value, onChange, step }: { value: number; onChange: (n: number) => void; step?: number | undefined }) {
   return (
     <input
       type="number"
