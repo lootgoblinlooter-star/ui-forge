@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PluginRouteImport } from './routes/plugin'
 import { Route as ApiAiUiRouteImport } from './routes/api/ai-ui'
 import { Route as ApiPublicSyncRouteImport } from './routes/api/public/sync'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PluginRoute = PluginRouteImport.update({
+  id: '/plugin',
+  path: '/plugin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAiUiRoute = ApiAiUiRouteImport.update({
@@ -31,30 +37,34 @@ const ApiPublicSyncRoute = ApiPublicSyncRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/plugin': typeof PluginRoute
   '/api/ai-ui': typeof ApiAiUiRoute
   '/api/public/sync': typeof ApiPublicSyncRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/plugin': typeof PluginRoute
   '/api/ai-ui': typeof ApiAiUiRoute
   '/api/public/sync': typeof ApiPublicSyncRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/plugin': typeof PluginRoute
   '/api/ai-ui': typeof ApiAiUiRoute
   '/api/public/sync': typeof ApiPublicSyncRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/ai-ui' | '/api/public/sync'
+  fullPaths: '/' | '/plugin' | '/api/ai-ui' | '/api/public/sync'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/ai-ui' | '/api/public/sync'
-  id: '__root__' | '/' | '/api/ai-ui' | '/api/public/sync'
+  to: '/' | '/plugin' | '/api/ai-ui' | '/api/public/sync'
+  id: '__root__' | '/' | '/plugin' | '/api/ai-ui' | '/api/public/sync'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PluginRoute: typeof PluginRoute
   ApiAiUiRoute: typeof ApiAiUiRoute
   ApiPublicSyncRoute: typeof ApiPublicSyncRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plugin': {
+      id: '/plugin'
+      path: '/plugin'
+      fullPath: '/plugin'
+      preLoaderRoute: typeof PluginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/ai-ui': {
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PluginRoute: PluginRoute,
   ApiAiUiRoute: ApiAiUiRoute,
   ApiPublicSyncRoute: ApiPublicSyncRoute,
 }
