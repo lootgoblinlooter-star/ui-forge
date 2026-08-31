@@ -211,30 +211,30 @@ function Builder() {
         </div>
       </header>
 
-      <ResizablePanelGroup direction="horizontal" className="min-h-0 flex-1">
+      <ResizablePanelGroup orientation="horizontal" className="min-h-0 flex-1">
         {!preview && (
           <>
-            <ResizablePanel defaultSize={20} minSize={14} className="border-r border-border">
+            <ResizablePanel defaultSize="20" minSize="14" className="border-r border-border">
               <LeftPanel pendingPrompt={pendingPrompt} onPromptConsumed={() => setPendingPrompt(null)} />
             </ResizablePanel>
             <ResizableHandle withHandle />
           </>
         )}
 
-        <ResizablePanel defaultSize={preview ? 100 : 56}>
+        <ResizablePanel defaultSize={preview ? "100" : "56"}>
           <Canvas preview={preview} />
         </ResizablePanel>
 
         {!preview && (
           <>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={24} minSize={16} className="border-l border-border">
-              <ResizablePanelGroup direction="vertical">
-                <ResizablePanel defaultSize={45} minSize={15}>
+            <ResizablePanel defaultSize="24" minSize="16" className="border-l border-border">
+              <ResizablePanelGroup orientation="vertical">
+                <ResizablePanel defaultSize="45" minSize="15">
                   <Explorer onAsk={(p) => setPendingPrompt(p)} />
                 </ResizablePanel>
                 <ResizableHandle withHandle />
-                <ResizablePanel defaultSize={55} minSize={15}>
+                <ResizablePanel defaultSize="55" minSize="15">
                   <Properties />
                 </ResizablePanel>
               </ResizablePanelGroup>
