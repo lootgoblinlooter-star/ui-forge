@@ -99,11 +99,19 @@ export function Properties() {
 
   if (!node) {
     return (
-      <div className="flex h-full items-center justify-center p-4 text-center text-xs text-muted-foreground">
-        Select an object in the Explorer or on the canvas to edit its properties.
+      <div className="flex h-full flex-col">
+        <div className="flex items-center gap-2 border-b border-border px-2 py-1.5">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+            Properties
+          </span>
+        </div>
+        <div className="flex flex-1 items-center justify-center p-4 text-center text-xs text-muted-foreground">
+          Select an object in the Explorer or on the canvas to edit its properties.
+        </div>
       </div>
     );
   }
+
 
   const defs = PROPERTY_SCHEMA[node.className] ?? [];
   const parentPath = pathOf(b.root, node.id)
